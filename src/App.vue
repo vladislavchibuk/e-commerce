@@ -20,6 +20,9 @@
   })
 
   const onElemClick = pathName => (currentPathName.value = pathName)
+  const onClickToUser = () => {
+    router.push({ path: '/user' })
+  }
 
   const getMenuItems = async () => {
     try {
@@ -58,7 +61,7 @@
     </el-menu>
 
     <div class="icons-btns">
-      <button>
+      <button @click="onClickToUser">
         <el-icon size="20"><User /></el-icon>
       </button>
       <button>
