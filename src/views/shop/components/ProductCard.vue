@@ -11,10 +11,17 @@
       price: Number,
     },
   })
+
+  const addToFavorites = () => {
+    console.log('mama')
+  }
 </script>
 
 <template>
   <div class="product-catd-box">
+    <div class="favorit-icon">
+      <el-icon class="favorit-icon-style" size="20" @click="addToFavorites"><Star /></el-icon>
+    </div>
     <div class="img-description">
       <div>
         <img class="img-style" src="/public/images/product-images/kyrtka.png" alt="" />
@@ -25,7 +32,6 @@
         {{ info.description }}
       </p>
     </div>
-
     <span>{{ moneyFormatter(info.price) }}</span>
   </div>
 </template>
@@ -49,6 +55,19 @@
   }
   .img-style {
     width: 100%;
+  }
+
+  .favorit-icon {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .favorit-icon-style {
+    transition: 0.3s ease-in-out;
+    &:hover {
+      color: gray;
+    }
   }
 
   .img-description {

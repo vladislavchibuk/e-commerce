@@ -38,6 +38,12 @@
   const clickToLogo = () => {
     router.push({ path: '/home' })
   }
+  const onClickToFavorit = () => {
+    router.push({ path: '/favorit' })
+  }
+  const onClickToCard = () => {
+    router.push({ path: '/card' })
+  }
 </script>
 
 <template>
@@ -64,10 +70,10 @@
       <button @click="onClickToUser">
         <el-icon size="20"><User /></el-icon>
       </button>
-      <button>
+      <button @click="onClickToFavorit">
         <el-icon size="20"><Star /></el-icon>
       </button>
-      <button>
+      <button @click="onClickToCard">
         <el-icon size="20"><ShoppingCart /></el-icon>
       </button>
     </div>
@@ -77,6 +83,10 @@
 </template>
 
 <style scoped>
+  html,
+  body {
+    overflow: hidden;
+  }
   *body {
     margin: 0;
     padding: 0;

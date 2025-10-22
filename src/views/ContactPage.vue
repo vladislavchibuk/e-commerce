@@ -33,24 +33,44 @@
   </div>
 </template>
 
-<style scoped>
+<style>
+  html {
+    scrollbar-gutter: stable; /* фиксирует ширину страницы при появлении/скрытии скролла */
+    overflow-y: scroll;
+  }
+
+  /* скрываем сам скроллбар */
+  ::-webkit-scrollbar {
+    width: 3px;
+    background: rgb(207, 207, 207);
+  }
+  * {
+    scrollbar-width: none; /* Firefox */
+  }
+
+  body {
+    margin: 0;
+  }
+
   .contact-main {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     margin: 50px auto;
-    width: 100vw;
+    width: 100%;
     gap: 50px;
   }
+
   .contact-page {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vh;
+    width: 100%;
     gap: 50px;
     flex-wrap: wrap;
   }
+
   .instagram-contact,
   .telegram-contact,
   .phone-contact,
@@ -64,10 +84,14 @@
     background-color: #f2f2f2;
     transition: 0.3s ease-in-out;
     border-radius: 20px;
-    padding: 20px 20px;
-    &:hover {
-      background-color: #e9e9e9;
-      cursor: pointer;
-    }
+    padding: 20px;
+  }
+
+  .instagram-contact:hover,
+  .telegram-contact:hover,
+  .phone-contact:hover,
+  .email-contact:hover {
+    background-color: #e9e9e9;
+    cursor: pointer;
   }
 </style>

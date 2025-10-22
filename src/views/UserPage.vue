@@ -1,9 +1,25 @@
 <script setup>
-  import { ref, watch } from 'vue'
+  import { ref, watch, computed } from 'vue'
 
   const emailValue = ref('')
   const passlValue = ref('')
-  const checkedValue = ref('')
+  const checkedValue = ref(false)
+
+  // Функции валидации
+  const isValidEmail = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+  }
+
+  const isValidPassword = password => {
+    // Пароль должен содержать минимум 6 символов, включая буквы и цифры
+    return password.length >= 6 && /[A-Za-z]/.test(password) && /[0-9]/.test(password)
+  }
+
+  // Computed свойство для проверки всех условий
+  const isFormValid = computed(() => {
+    return isValidEmail(emailValue.value) && isValidPassword(passlValue.value) && checkedValue.value
+  })
 
   watch(checkedValue, newValie => {
     console.log(newValie)
@@ -18,8 +34,18 @@
 
 <template>
   <div class="login">
-    <h1>Вход</h1>
-    <el-input v-model="emailValue" style="width: 250px" placeholder="Почта" clearable />
+    <h1>Регистрация</h1>
+    <el-input
+      v-model="emailValue"
+      style="width: 250px"
+      placeholder="Почта"
+      clearable
+      :class="{ error: emailValue && !isValidEmail(emailValue) }"
+    />
+    <div v-if="emailValue && !isValidEmail(emailValue)" class="error-message">
+      Введите корректный email
+    </div>
+
     <el-input
       class="password"
       v-model="passlValue"
@@ -27,17 +53,19 @@
       type="password"
       placeholder="Пароль"
       clearable
+      :class="{ error: passlValue && !isValidPassword(passlValue) }"
     />
+    <div v-if="passlValue && !isValidPassword(passlValue)" class="error-message">
+      Пароль должен содержать минимум 6 символов, включая буквы и цифры
+    </div>
     <div class="btn">
       <div class="check-box">
         <el-checkbox v-model="checkedValue" size="large" />
-        Даю согласие на
-        <a class="policy" @click="clickToPolycy"><strong>всю хуйню</strong></a>
+        Я согласен на
+        <a class="policy" @click="clickToPolycy"><strong>любую хуйню</strong></a>
       </div>
 
-      <el-button type="success" style="width: 250px" :disabled="!checkedValue && !emailValue">
-        Success
-      </el-button>
+      <el-button type="success" style="width: 250px" :disabled="!isFormValid">Success</el-button>
     </div>
   </div>
 </template>
@@ -62,5 +90,19 @@
   }
   .policy {
     cursor: pointer;
+  }
+
+  .error-message {
+    color: #f56c6c;
+    font-size: 12px;
+    margin-top: -15px;
+    margin-bottom: 10px;
+    text-align: left;
+    width: 250px;
+  }
+
+  .error :deep(.el-input__wrapper) {
+    border-color: #f56c6c;
+    box-shadow: 0 0 0 1px #f56c6c inset;
   }
 </style>
